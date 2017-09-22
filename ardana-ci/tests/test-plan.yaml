@@ -1,0 +1,267 @@
+#
+# (c) Copyright 2016-2017 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+
+### Start Tests Whilst Using New Storage Input Model ###
+
+- name: Test Cinder Status 1
+  logfile: test_cinder_status_1.log
+  prefix: Cinder-Status
+  exec:
+    - ansible-playbook -i hosts/verb_hosts cinder-status.yml
+
+# Checks if cinder services are running on expected controllers
+- name: Validate Cinder Status 1
+  logfile: validate_cinder_status_1.log
+  prefix: Validate-Status
+  exec:
+    - validate-cinder-status-1.bash
+
+- name: Test Cinder Reconfigure 1
+  logfile: test_cinder_reconfigure_1.log
+  prefix: Cinder-Reconfigure
+  playbooks:
+    - cinder-reconfigure.yml
+
+- name: Test Cinder Upgrade 1
+  logfile: test_cinder_upgrade_1.log
+  prefix: Cinder-Upgrade
+  playbooks:
+    - cinder-upgrade.yml
+
+- name: Test Reconfigure Credentials Change 1
+  logfile: test_cinder_reconfigure_credentials_change_1.log
+  prefix: Reconfigure-Creds-Change
+  playbooks:
+    - cinder-reconfigure-credentials-change.yml
+
+- name: Test Show Volume Hosts 1
+  logfile: test_cinder_show_vol_hosts_1.log
+  prefix: Show-Vol-Hosts
+  playbooks:
+    - cinder-show-volume-hosts.yml
+
+- name: Validate Cinder Operations 1
+  logfile: validate_cinder_ops_1.log
+  prefix: Validate-Ops
+  exec:
+    - validate-cinder-operations.bash
+
+- name: Test Cinder Stop 1
+  logfile: test_cinder_stop_1.log
+  prefix: Cinder-Stop
+  playbooks:
+    - cinder-stop.yml
+
+- name: Test Cinder Start 1
+  logfile: test_cinder_start_1.log
+  prefix: Cinder-Start
+  playbooks:
+    - cinder-start.yml
+
+- name: Test Cinder Status 2
+  logfile: test_cinder_status_2.log
+  prefix: Cinder-Status
+  exec:
+    - ansible-playbook -i hosts/verb_hosts cinder-status.yml
+
+- name: Run tempest tests 1
+  logfile: cinder_tempest_tests_1.log
+  prefix: Tempest
+  tempest:
+    - "+tempest.api.volume"
+    - "-tempest.api.volume.admin.test_volume_quotas.BaseVolumeQuotasAdminV2TestJSON.test_delete_quota"
+    - "-tempest.api.volume.admin.test_volume_quotas.VolumeQuotasAdminV1TestJSON.test_delete_quota"
+    - "-tempest.api.volume.admin.test_volume_services.VolumesServicesV1TestJSON.test_get_service_by_host_name"
+    - "-tempest.api.volume.admin.test_volume_services.VolumesServicesV2TestJSON.test_get_service_by_host_name"
+    - "-tempest.api.volume.test_volumes_actions.VolumesV1ActionsTest"
+    - "-tempest.api.volume.test_volumes_actions.VolumesV2ActionsTest"
+    - "+tempest.api.object_storage"
+    - "+tempest.api.compute.volumes"
+    - "+tempest.scenario.test_object_storage_basic_ops"
+    - "+tempest.scenario.test_encrypted_cinder_volumes"
+    - "-tempest.api.volume.test_volumes_backup.VolumesBackupsV1Test.test_bootable_volume_backup_and_restore"
+    - "-tempest.api.volume.test_volumes_backup.VolumesBackupsV2Test.test_bootable_volume_backup_and_restore"
+    - "-tempest.api.volume.test_volumes_clone.VolumesV1CloneTest.test_create_from_bootable_volume"
+    - "-tempest.api.volume.test_volumes_clone.VolumesV2CloneTest.test_create_from_bootable_volume"
+    - "-tempest.api.volume.v2.test_image_metadata.VolumesV2ImageMetadata"
+
+### Cinder Migrate With New Storage Input Model ###
+
+- name: Validate Backends Before Migrate
+  logfile: validate_backends-1.log
+  prefix: Validate-Backends
+  exec:
+    - validate-backends-1.bash
+
+# Copy cinder_backend_assignment.fact file for migrate
+- name: Copy Cinder Fact File 1
+  logfile: copy_cinder_fact_file_1.log
+  prefix: Copy-Fact-File
+  exec:
+    - copy-cinder-fact-file-1.bash
+
+- name: Test Cinder Migrate Volume 1
+  logfile: test_cinder_migrate_1.log
+  prefix: Cinder-Migrate
+  exec:
+    - ansible-playbook -i hosts/verb_hosts cinder-migrate-volume.yml
+      -e '{\"confirm_cinder_migrate\":false}'
+
+- name: Validate Backends After Migrate
+  logfile: validate_backends-2.log
+  prefix: Validate-Backends
+  exec:
+    - validate-backends-2.bash
+
+- name: Test Cinder Status 3
+  logfile: test_cinder_status_3.log
+  prefix: Cinder-Status
+  exec:
+    - ansible-playbook -i hosts/verb_hosts cinder-status.yml
+
+# Checks if cinder services are running on expected controllers
+- name: Validate Cinder Status 2
+  logfile: validate_cinder_status_2.log
+  prefix: Validate-Status
+  exec:
+    - validate-cinder-status-1.bash
+
+### Stop Using Storage Input Model And Configure Using Jinja2 ###
+
+- name: Configure Using Jinja2
+  logfile: configure_using_jinja2.log
+  prefix: Configure-Jinja2
+  exec:
+    - configure-using-jinja2.bash
+
+- name: Deploy Cinder with Jinja2 Configuration
+  logfile: test_cinder_deploy.log
+  prefix: Cinder-Deploy
+  playbooks:
+    - cinder-deploy.yml
+
+- name: Test Cinder Status 4
+  logfile: test_cinder_status_4.log
+  prefix: Cinder-Status
+  exec:
+    - ansible-playbook -i hosts/verb_hosts cinder-status.yml
+
+# Checks if cinder services are running on expected controllers
+- name: Validate Cinder Status 3
+  logfile: validate_cinder_status_3.log
+  prefix: Validate-Status
+  exec:
+    - validate-cinder-status-2.bash
+
+### Cinder Migrate With Jinja2 Configuration ###
+
+# Copy cinder_volume_run_location_ccp.fact for migrate
+- name: Copy Cinder Fact File 2
+  logfile: copy_cinder_fact_file_2.log
+  prefix: Copy-Fact-File
+  exec:
+    - copy-cinder-fact-file-2.bash
+
+- name: Test Cinder Migrate Volume 2
+  logfile: test_cinder_migrate_2.log
+  prefix: Cinder-Migrate
+  exec:
+    - ansible-playbook -i hosts/verb_hosts cinder-migrate-volume.yml
+      -e '{\"confirm_cinder_migrate\":false}'
+
+- name: Test Cinder Status 5
+  logfile: test_cinder_status_5.log
+  prefix: Cinder-Status
+  playbooks:
+    - cinder-status.yml
+
+# Checks if cinder services are running on expected controllers
+- name: Validate Cinder Status 4
+  logfile: validate_cinder_status_4.log
+  prefix: Validate-Status
+  exec:
+    - validate-cinder-status-3.bash
+
+- name: Test Cinder Reconfigure 2
+  logfile: test_cinder_reconfigure_2.log
+  prefix: Cinder-Reconfigure
+  playbooks:
+    - cinder-reconfigure.yml
+
+- name: Test Cinder Upgrade 2
+  logfile: test_cinder_upgrade_2.log
+  prefix: Cinder-Upgrade
+  playbooks:
+    - cinder-upgrade.yml
+
+- name: Test Reconfigure Credentials Change 2
+  logfile: test_cinder_reconfigure_credentials_change_2.log
+  prefix: Reconfigure-Creds-Change
+  playbooks:
+    - cinder-reconfigure-credentials-change.yml
+
+- name: Test Show Volume Hosts 2
+  logfile: test_cinder_show_vol_hosts_2.log
+  prefix: Show-Vol-Hosts
+  playbooks:
+    - cinder-show-volume-hosts.yml
+
+- name: Validate Cinder Operations 2
+  logfile: validate_cinder_ops_2.log
+  prefix: Validate-Ops
+  exec:
+    - validate-cinder-operations.bash
+
+- name: Test Cinder Stop 2
+  logfile: test_cinder_stop_2.log
+  prefix: Cinder-Stop
+  playbooks:
+    - cinder-stop.yml
+
+- name: Test Cinder Start 2
+  logfile: test_cinder_start_2.log
+  prefix: Cinder-Start
+  playbooks:
+    - cinder-start.yml
+
+- name: Test Cinder Status 6
+  logfile: test_cinder_status_6.log
+  prefix: Cinder-Status
+  exec:
+    - ansible-playbook -i hosts/verb_hosts cinder-status.yml
+
+- name: Run tempest tests 2
+  logfile: cinder_tempest_tests_2.log
+  prefix: Tempest
+  tempest:
+    - "+tempest.api.volume"
+    - "-tempest.api.volume.admin.test_volume_quotas.BaseVolumeQuotasAdminV2TestJSON.test_delete_quota"
+    - "-tempest.api.volume.admin.test_volume_quotas.VolumeQuotasAdminV1TestJSON.test_delete_quota"
+    - "-tempest.api.volume.admin.test_volume_services.VolumesServicesV1TestJSON.test_get_service_by_host_name"
+    - "-tempest.api.volume.admin.test_volume_services.VolumesServicesV2TestJSON.test_get_service_by_host_name"
+    - "-tempest.api.volume.test_volumes_actions.VolumesV1ActionsTest"
+    - "-tempest.api.volume.test_volumes_actions.VolumesV2ActionsTest"
+    - "+tempest.api.object_storage"
+    - "+tempest.api.compute.volumes"
+    - "+tempest.scenario.test_object_storage_basic_ops"
+    - "+tempest.scenario.test_encrypted_cinder_volumes"
+    - "-tempest.api.volume.test_volumes_backup.VolumesBackupsV1Test.test_bootable_volume_backup_and_restore"
+    - "-tempest.api.volume.test_volumes_backup.VolumesBackupsV2Test.test_bootable_volume_backup_and_restore"
+    - "-tempest.api.volume.test_volumes_clone.VolumesV1CloneTest.test_create_from_bootable_volume"
+    - "-tempest.api.volume.test_volumes_clone.VolumesV2CloneTest.test_create_from_bootable_volume"
+    - "-tempest.api.volume.v2.test_image_metadata.VolumesV2ImageMetadata"

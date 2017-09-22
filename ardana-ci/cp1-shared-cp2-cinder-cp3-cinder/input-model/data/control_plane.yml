@@ -1,0 +1,225 @@
+#
+# (c) Copyright 2016 Hewlett Packard Enterprise Development LP
+# (c) Copyright 2017 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+---
+  product:
+    version: 2
+
+  control-planes:
+    - name: cp1
+      control-plane-prefix: cp1
+      failure-zones:
+        - AZ1
+        - AZ2
+        - AZ3
+
+      configuration-data:
+        - SWIFT-CONFIG-CP1
+      common-service-components:
+        - lifecycle-manager-target
+
+      load-balancers:
+        - name: lb
+          provider: ip-cluster
+          tls-components:
+            - default
+          components:
+            - rabbitmq
+            - mysql
+          roles:
+            - internal
+            - admin
+
+        - name: extlb
+          provider: ip-cluster
+          external-name: myardana-cp1.test
+          cert-file: my-public-cp1-cert
+          tls-components:
+            - default
+          roles:
+            - public
+
+      clusters:
+        - name: ctrl-cp1
+          cluster-prefix: c1
+          server-role:
+              - CP1-CONTROLLER-ROLE
+          member-count: 1
+          allocation-policy: strict
+          service-components:
+            - lifecycle-manager
+            - lifecycle-manager-target
+            - ntp-server
+            - mysql
+            - ip-cluster
+            - keystone-api
+            - rabbitmq
+            - memcached
+            - cinder-client
+            - swift-proxy
+            - swift-account
+            - swift-container
+            - swift-object
+            - swift-ring-builder
+            - swift-client
+            - glance-api:
+                ha_mode: false
+                glance_stores: 'file'
+                glance_default_store: 'file'
+            - glance-registry
+
+    - name: cp2
+      control-plane-prefix: cp2
+      uses:
+        - from: cp1
+          service-components:
+            - all
+      failure-zones:
+        - AZ1
+        - AZ2
+        - AZ3
+
+      common-service-components:
+        - lifecycle-manager-target
+        - ntp-client
+
+      load-balancers:
+        - name: lb
+          provider: ip-cluster
+          tls-components:
+            - default
+          components:
+            - rabbitmq
+            - mysql
+            - nova-metadata
+          roles:
+            - internal
+            - admin
+
+        - name: extlb
+          provider: ip-cluster
+          external-name: myardana-cp2.test
+          cert-file: my-public-cp2-cert
+          tls-components:
+            - default
+          roles:
+            - public
+
+      clusters:
+        - name: ctrl-cp2
+          cluster-prefix: c2
+          server-role:
+              - CP2-CONTROLLER-ROLE
+          member-count: 3
+          allocation-policy: strict
+          service-components:
+            - mysql
+            - rabbitmq
+            - ip-cluster
+            - cinder-api
+            - cinder-scheduler
+            - cinder-volume
+            - cinder-backup
+            - cinder-client
+            - nova-api
+            - nova-scheduler
+            - nova-conductor
+            - nova-console-auth
+            - nova-novncproxy
+            - neutron-server
+            - neutron-ml2-plugin
+            - neutron-vpn-agent
+            - neutron-dhcp-agent
+            - neutron-metadata-agent
+            - neutron-openvswitch-agent
+
+      resources:
+        - name: compute
+          resource-prefix: comp
+          server-role: CP2-COMPUTE-ROLE
+          allocation-policy: any
+          service-components:
+            - nova-compute-kvm
+            - nova-compute
+            - neutron-l3-agent
+            - neutron-metadata-agent
+            - neutron-openvswitch-agent
+            - neutron-lbaasv2-agent
+
+    - name: cp3
+      control-plane-prefix: cp3
+      uses:
+        - from: cp1
+          service-components:
+            - all
+      failure-zones:
+        - AZ1
+        - AZ2
+        - AZ3
+
+      common-service-components:
+        - lifecycle-manager-target
+        - ntp-client
+
+      load-balancers:
+        - name: lb
+          provider: ip-cluster
+          tls-components:
+            - default
+          components:
+            - rabbitmq
+            - mysql
+            - nova-metadata
+          roles:
+            - internal
+            - admin
+
+        - name: extlb
+          provider: ip-cluster
+          external-name: myardana-cp3.test
+          cert-file: my-public-cp3-cert
+          tls-components:
+            - default
+          roles:
+            - public
+
+      clusters:
+        - name: ctrl-cp3
+          cluster-prefix: c3
+          server-role:
+              - CP3-CONTROLLER-ROLE
+          member-count: 2
+          allocation-policy: strict
+          service-components:
+            - mysql
+            - rabbitmq
+            - ip-cluster
+            - cinder-api
+            - cinder-scheduler
+            - cinder-volume
+            - cinder-backup
+            - cinder-client
+            - nova-api
+            - nova-scheduler
+            - nova-conductor
+            - nova-console-auth
+            - nova-novncproxy
+            - neutron-server
+            - neutron-ml2-plugin
+            - neutron-vpn-agent
+            - neutron-dhcp-agent
+            - neutron-metadata-agent
+            - neutron-openvswitch-agent
