@@ -26,13 +26,11 @@
 
 # Call out significant dependencies separately from main package
 - name: CND-VOL | install | Install Cinder Volume dependencies
-  apt: name={{ item }} install_recommends=no state=latest force=yes
-  with_items:
-    - lvm2
-    - qemu-utils
-    - sg3-utils
-    - tgt
-    - thin-provisioning-tools
+  become: yes
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: cinder_volume_dependencies
   ignore_errors: True
   register: install_vol_deps_dpkg_check_result
 

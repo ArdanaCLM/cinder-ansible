@@ -23,12 +23,11 @@
 
 - name: CND-API | install | Install Cinder API dependencies
   become: yes
-  apt: name={{ item }} install_recommends=no state=latest force=yes
-  with_items:
-    - libmysqlclient18
-    - libxslt1.1
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: cinder_api_dependencies
   ignore_errors: True
-  when: ansible_os_family == 'Debian'
 
 - name: CND-API | install | Update venv cache
   install_package:

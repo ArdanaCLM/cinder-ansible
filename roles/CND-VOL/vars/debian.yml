@@ -1,5 +1,4 @@
 #
-# (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
 # (c) Copyright 2017 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -15,14 +14,11 @@
 # under the License.
 #
 ---
+cinder_volume_dependencies:
+  - lvm2
+  - qemu-utils
+  - sg3-utils
+  - tgt
+  - thin-provisioning-tools
 
-# Install Cinder Service Dependencies
-
-# Call out significant dependencies separately from main package
-- name: CND-SVC | install | Install Cinder Client OS specific dependencies
-  become: yes
-  package:
-    name: "{{ item }}"
-    state: latest
-  with_items: cinder_service_client_dependencies
-  ignore_errors: True
+cinder_tgt_service_name: tgt

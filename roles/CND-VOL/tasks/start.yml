@@ -22,7 +22,9 @@
 - include: ./_activate.yml
 
 - name: CND-VOL | start | Start tgt service
-  service: name=tgt state=started
+  service:
+    name: "{{ cinder_tgt_service_name }}"
+    state: started
 
 - name: CND-VOL | start | Restart cinder-volume service
   service:

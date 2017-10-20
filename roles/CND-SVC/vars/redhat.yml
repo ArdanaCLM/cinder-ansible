@@ -1,5 +1,4 @@
 #
-# (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
 # (c) Copyright 2017 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -15,14 +14,7 @@
 # under the License.
 #
 ---
-
-# Install Cinder Service Dependencies
-
-# Call out significant dependencies separately from main package
-- name: CND-SVC | install | Install Cinder Client OS specific dependencies
-  become: yes
-  package:
-    name: "{{ item }}"
-    state: latest
-  with_items: cinder_service_client_dependencies
-  ignore_errors: True
+cinder_service_client_dependencies:
+  - iscsi-initiator-utils
+  - sysfsutils
+  - sg3-utils
