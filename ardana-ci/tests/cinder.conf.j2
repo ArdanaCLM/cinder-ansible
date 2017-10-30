@@ -153,6 +153,7 @@ volume-group = cinder-volumes
 lvm_type = thin
 volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
 volume_backend_name = LVM_iSCSI
+iscsi_ip_address = {{ cinder_osapi_volume_listen }}
 {% endif %}
 
 # Start of section for StoreVirtual (VSA) cluster
