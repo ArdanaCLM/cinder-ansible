@@ -58,8 +58,6 @@ image_conversion_dir={{ cinder_image_conversion_dir }}
 iscsi_helper={{ cinder_iscsi_helper }}
 
 
-rpc_backend=cinder.openstack.common.rpc.impl_kombu
-
 {% if cinder_public_endpoint is defined %}
 # Uncomment to set the public API in the links responses
 #public_endpoint = {{ cinder_public_endpoint }}
