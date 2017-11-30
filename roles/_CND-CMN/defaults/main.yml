@@ -69,7 +69,7 @@ cinder_db_ssl: >-
 
 # database
 # DB password and host set by configure
-cinder_db: "mysql://{{ CND.consumes_FND_MDB.vars.accounts.cinder.username }}:\
+cinder_db: "mysql+pymysql://{{ CND.consumes_FND_MDB.vars.accounts.cinder.username }}:\
             {{ CND.consumes_FND_MDB.vars.accounts.cinder.password | urlencode }}@\
             {{ CND.consumes_FND_MDB.vips.private[0].host }}/cinder{{ cinder_db_ssl }}"
 cinder_max_overflow: 500
