@@ -28,7 +28,7 @@ encryption_class = 'openssl'
 ardanaencrypt_class = getattr(ardanaencrypt, encryption_class)
 
 
-def openstack_user_password_decrypt(value, *args, **kw):
+def cnd_user_password_decrypt(value, *args, **kw):
     prefix = None
     if value.startswith(ardanaencrypt_class.prefix):
         prefix = ardanaencrypt_class.prefix
@@ -46,5 +46,5 @@ def openstack_user_password_decrypt(value, *args, **kw):
 
 class FilterModule(object):
     def filters(self):
-        return {'openstack_user_password_decrypt':
-                openstack_user_password_decrypt}
+        return {'cnd_user_password_decrypt':
+                cnd_user_password_decrypt}
