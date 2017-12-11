@@ -174,8 +174,8 @@ volume_backend_name = LVM_iSCSI
 #[<unique-section-name>]
 # If adding a password here, then the password can be encrypted using the
 # mechanism specified in the documentation.  If the password has been encrypted
-# add the value and the cnd_user_password_decrypt filter like so:
-#hplefthand_password = {{ '<encrypted vsa-cluster-password>' | cnd_user_password_decrypt }}
+# add the value and the openstack_user_password_decrypt filter like so:
+#hplefthand_password = {{ '<encrypted vsa-cluster-password>' | openstack_user_password_decrypt }}
 # Note that the encrypted value has to be enclosed in quotes
 # If you choose not to encrypt the password then the unencrypted password
 # must be set as follows:
@@ -199,8 +199,8 @@ volume_backend_name = LVM_iSCSI
 # san_login=<san_username>
 # If adding a password here, then the password can be encrypted using the
 # mechanism specified in the documentation.  If the password has been encrypted
-# add the value and the cnd_user_password_decrypt filter like so:
-# san_password= {{ '<encrypted san_password>' | cnd_user_password_decrypt }}
+# add the value and the openstack_user_password_decrypt filter like so:
+# san_password= {{ '<encrypted san_password>' | openstack_user_password_decrypt }}
 # Note that the encrypted value has to be enclosed in quotes
 # If you choose not to encrypt the password then the unencrypted password
 # must be set as follows:
@@ -235,8 +235,8 @@ volume_backend_name = LVM_iSCSI
 #san_login = <3par-san-username>
 # If adding a password here, then the password can be encrypted using the
 # mechanism specified in the documentation.  If the password has been encrypted
-# add the value and the cnd_user_password_decrypt filter like so:
-# san_password = {{ '<encrypted 3par-san-password>' | cnd_user_password_decrypt }}
+# add the value and the openstack_user_password_decrypt filter like so:
+# san_password = {{ '<encrypted 3par-san-password>' | openstack_user_password_decrypt }}
 # Note that the encrypted value has to be enclosed in quotes
 # If you choose not to encrypt the password then the unencrypted password
 # must be set as follows:
@@ -245,8 +245,8 @@ volume_backend_name = LVM_iSCSI
 #hp3par_username = <3par-username>
 # If adding a password here, then the password can be encrypted using the
 # mechanism specified in the documentation.  If the password has been encrypted
-# add the value and the cnd_user_password_decrypt filter like so:
-#hp3par_password = {{ '<encrypted hp3par_password>' | cnd_user_password_decrypt }}
+# add the value and the openstack_user_password_decrypt filter like so:
+#hp3par_password = {{ '<encrypted hp3par_password>' | openstack_user_password_decrypt }}
 # Note that the encrypted value has to be enclosed in quotes
 # If you choose not to encrypt the password then the unencrypted password
 # must be set as follows:
@@ -282,8 +282,8 @@ volume_backend_name = LVM_iSCSI
 #san_login = <3par-san-username>
 # If adding a password here, then the password can be encrypted using the
 # mechanism specified in the documentation.  If the password has been encrypted
-# add the value and the cnd_user_password_decrypt filter like so:
-#san_password = {{ '<encrypted 3par-san-password>' | cnd_user_password_decrypt }}
+# add the value and the openstack_user_password_decrypt filter like so:
+#san_password = {{ '<encrypted 3par-san-password>' | openstack_user_password_decrypt }}
 # Note that the encrypted value has to be enclosed in quotes
 # If you choose not to encrypt the password then the unencrypted password
 # must be set as follows:
@@ -291,8 +291,8 @@ volume_backend_name = LVM_iSCSI
 #hp3par_username = <3par-username>
 # If adding a password here, then the password can be encrypted using the
 # mechanism specified in the documentation.  If the password has been encrypted
-# add the value and the cnd_user_password_decrypt filter like so:
-#hp3par_password = {{ '<encrypted 3par-password>' | cnd_user_password_decrypt }}
+# add the value and the openstack_user_password_decrypt filter like so:
+#hp3par_password = {{ '<encrypted 3par-password>' | openstack_user_password_decrypt }}
 # Note that the encrypted value has to be enclosed in quotes
 # If you choose not to encrypt the password then the unencrypted password
 # must be set as follows:
