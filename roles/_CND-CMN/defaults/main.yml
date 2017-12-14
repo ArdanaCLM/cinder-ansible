@@ -89,6 +89,7 @@ cinder_keystone:
   region_name: "{{ CND_API.advertises.vips.public[0].region_name }}"
   internal_url: "{{ CND_API.consumes_KEY_API.vips.private[0].url }}"
   monasca_tenant: "{{ KEY_API.vars.keystone_admin_tenant }}"
+  cacert_file: "/etc/ssl/certs/ca-certificates.crt"
   memcached_servers: "{% for x in CND.consumes_FND_MEM.members.private %}{{ x.host }}:{{ x.port }}{%if not loop.last %},{% endif %}{% endfor %}"
   memcache_secret_key: "{{ CND.consumes_FND_MEM.vars.memcached.cinder.secret_key | quote }}"
 

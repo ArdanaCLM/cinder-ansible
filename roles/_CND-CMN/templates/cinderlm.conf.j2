@@ -24,4 +24,4 @@ cinderlm_project_name = {{ cinderinternal_project_name }}
 # TODO: WIP - move on to v3.0 authentication
 cinderlm_auth_url = {{ cinder_keystone.identity_admin_url }}/v2.0
 cinderlm_capacity_check = {{ cinderlm_capacity_check }}
-cinderlm_ca_cert_file = /etc/ssl/certs/ca-certificates.crt
+cinderlm_ca_cert_file = {{ cinder_keystone.cacert_file }}
