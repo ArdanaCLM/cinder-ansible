@@ -27,7 +27,6 @@ enable_v3_api=True
 
 osapi_volume_listen = {{ cinder_osapi_volume_listen }}
 osapi_volume_listen_port = {{ cinder_osapi_volume_listen_port }}
-bind_host = {{ cinder_bind_host }}
 {% if cinder_glance_url is defined %}
 glance_api_servers = {{ cinder_glance_url }}
 {% endif %}
