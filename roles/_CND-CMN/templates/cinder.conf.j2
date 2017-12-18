@@ -128,6 +128,10 @@ username = {{ cinder_identity_admin_user }}
 password = {{ cinder_identity_admin_password }}
 service_token_roles_required = true
 service_token_roles = admin
+memcached_servers = {{ cinder_keystone.memcached_servers }}
+memcache_security_strategy = ENCRYPT
+memcache_secret_key = {{ cinder_keystone.memcache_secret_key }}
+memcache_pool_socket_timeout = 1
 
 [database]
 connection={{ cinder_db }}
