@@ -56,6 +56,7 @@ cinder_iscsi_helper: tgtadm
 #cinder_keymgr_fixed_key:
 cinder_control_exchange: cinder
 cinder_notification_driver: messaging
+cinder_notification_backend: "rabbit"
 cinder_osapi_volume_listen: "{{ host.bind.CND_API.internal.ip_address }}"
 cinder_osapi_volume_listen_port: "{{ host.bind.CND_API.internal.port }}"
 cinder_bind_host: "{{ host.bind.CND_API.internal.ip_address }}"
@@ -109,11 +110,13 @@ cinderinternal_project_name: >
                       default='cinderinternal') }}
 
 # Rabbit
-cinder_rabbit_hosts: "{% for x in CND.consumes_FND_RMQ.members.private %}{{ x.host }}:\
-                      {{ x.port }}{%if not loop.last %},{% endif %}{% endfor %}"
 cinder_rabbit_userid: "{{ CND.consumes_FND_RMQ.vars.accounts.cinder.username }}"
 cinder_rabbit_password: "{{ CND.consumes_FND_RMQ.vars.accounts.cinder.password }}"
-cinder_rabbit_use_ssl: "{{ CND.consumes_FND_RMQ.members.private[0].use_tls }}"
+cinder_rabbit_use_ssl: "{{ CND.consumes_FND_RMQ.members.private[0].use_tls }}"
+cinder_rabbit_hosts_transport_url: >
+  {%- for x in CND.consumes_FND_RMQ.members.private -%}
+    {{ cinder_rabbit_userid }}:{{ cinder_rabbit_password }}@{{ x.host }}:{{ x.port }}{%- if not loop.last -%},{%- endif -%}
+  {%- endfor -%}
 
 # Default service directories
 cinder_common_conf_dir: "{{ 'cinder-common' | config_dir() }}"
