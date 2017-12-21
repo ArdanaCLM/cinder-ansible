@@ -17,4 +17,4 @@
 cinder_service_client_dependencies:
   - iscsi-initiator-utils
   - sysfsutils
-  - sg3-utils
+  - sg3_utils
