@@ -78,6 +78,8 @@
   changed_when: 'rsync_result.stdout != ""'
   with_items:
     - rootwrap.d/volume.filters
+  when: deployer_media_legacy_layout|bool
+
 
 # Since this file is included by CND-BCK role, cnd_configure_tgt may
 # have been set to False; if not default to True.
