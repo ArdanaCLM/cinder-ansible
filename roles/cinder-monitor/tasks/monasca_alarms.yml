@@ -49,6 +49,9 @@
     keystone_user: "{{ cinder_keystone.admin_user }}"
     keystone_password: "{{ cinder_keystone.admin_password }}"
     keystone_project: "{{ cinder_keystone.monasca_tenant }}"
+    keystone_project_domain: "{{ cinder_keystone.default_domain_name }}"
+    keystone_user_domain: "{{ cinder_keystone.default_domain_name }}"
+    keystone_verify: "/etc/ssl/certs/ca-certificates.crt"
     monasca_api_url: "{{ monasca_alarm_definition_api_url }}"
     overwrite: false
   register: cinder_default_notification_result
@@ -67,6 +70,9 @@
     keystone_user: "{{ cinder_keystone.admin_user }}"
     keystone_password: "{{ cinder_keystone.admin_password }}"
     keystone_project: "{{ cinder_keystone.monasca_tenant }}"
+    keystone_project_domain: "{{ cinder_keystone.default_domain_name }}"
+    keystone_user_domain: "{{ cinder_keystone.default_domain_name }}"
+    keystone_verify: "/etc/ssl/certs/ca-certificates.crt"
     monasca_api_url: "{{ monasca_alarm_definition_api_url }}"
     state: "{{ cinder_volume_monitor_state }}"
     ok_actions:
@@ -94,6 +100,9 @@
     keystone_user: "{{ cinder_keystone.admin_user }}"
     keystone_password: "{{ cinder_keystone.admin_password }}"
     keystone_project: "{{ cinder_keystone.monasca_tenant }}"
+    keystone_project_domain: "{{ cinder_keystone.default_domain_name }}"
+    keystone_user_domain: "{{ cinder_keystone.default_domain_name }}"
+    keystone_verify: "/etc/ssl/certs/ca-certificates.crt"
     monasca_api_url: "{{ monasca_alarm_definition_api_url }}"
     state: "absent"
   with_items:
@@ -117,6 +126,9 @@
     keystone_user: "{{ cinder_keystone.admin_user }}"
     keystone_password: "{{ cinder_keystone.admin_password }}"
     keystone_project: "{{ cinder_keystone.monasca_tenant }}"
+    keystone_project_domain: "{{ cinder_keystone.default_domain_name }}"
+    keystone_user_domain: "{{ cinder_keystone.default_domain_name }}"
+    keystone_verify: "/etc/ssl/certs/ca-certificates.crt"
     monasca_api_url: "{{ monasca_alarm_definition_api_url }}"
     state: present
     ok_actions:
