@@ -59,7 +59,6 @@ cinder_notification_driver: messaging
 cinder_notification_backend: "rabbit"
 cinder_osapi_volume_listen: "{{ host.bind.CND_API.internal.ip_address }}"
 cinder_osapi_volume_listen_port: "{{ host.bind.CND_API.internal.port }}"
-cinder_bind_host: "{{ host.bind.CND_API.internal.ip_address }}"
 
 # database ssl
 cinder_db_ca_file: "/etc/ssl/certs/ca-certificates.crt"
