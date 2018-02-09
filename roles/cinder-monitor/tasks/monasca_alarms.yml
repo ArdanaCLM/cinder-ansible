@@ -140,10 +140,10 @@
   with_items:
     # Note > 0 also picks up a warning
     # - its legitimate to alarm for a drive warning
-    - expression: "cinderlm.hp_hardware.hpssacli.logical_drive\
+    - expression: "cinderlm.hp_hardware.ssacli.logical_drive\
                     {component=logical_drive,service=block-storage\
                     ,sub_component=lun_status} > 0"
       name: "faulty lun"
-    - expression: "cinderlm.hp_hardware.hpssacli.physical_drive\
+    - expression: "cinderlm.hp_hardware.ssacli.physical_drive\
                     {component=physical_drive,service=block-storage} > 0"
       name: "faulty drive"
