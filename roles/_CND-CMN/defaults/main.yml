@@ -18,7 +18,7 @@
 
 cinder_user: cinder
 cinder_group: cinder
-mon_agent_group: mon-agent
+mon_agent_group: monasca
 
 # Number of maximum worker allowed regardless of CPUs available
 osapi_volume_max_workers: 8

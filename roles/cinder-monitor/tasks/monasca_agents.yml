@@ -42,7 +42,7 @@
     name: "{{ cinder_monitor_json_dir }}"
     mode: 02750
     owner: root
-    group: mon-agent
+    group: monasca
     state: directory
 
 # Cinder related monitoring should only performed on cinder nodes,
