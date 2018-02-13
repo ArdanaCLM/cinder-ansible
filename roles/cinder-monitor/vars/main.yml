@@ -1,6 +1,6 @@
 #
 # (c) Copyright 2015 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -20,7 +20,11 @@
 #
 cinderlm_project: cinderlm
 
-cinderlm_project_src:  /opt/stack/service/{{ cinderlm_project }}/venv/lib/python2.7/site-packages/{{ cinderlm_project }}
+cinderlm_project_src: "{% if deployer_media_legacy_layout|bool -%}
+                           /opt/stack/service/{{ cinderlm_project }}/venv/lib/python2.7/site-packages/{{ cinderlm_project }}
+                       {%- else -%}
+                           /usr/lib/python2.7/site-packages/{{ cinderlm_project }}/
+                       {%- endif -%}"
 
 # path where custom check plugin(s) may be found (a valid path for 'find')
 cinder_check_plugins_src: "{{ cinderlm_project_src }}/monasca/check_plugins"
