@@ -142,3 +142,16 @@ cinder_backend_assignment_file: "{{ cinder_facts_dir }}/\
 # file or by defining a storage input model.
 cinder_volume_host_index: 0
 _cinder_volume_running_here: False
+
+## Cinder SES Integration
+cinder_ses_enabled: "{{ 'True' if ses_cinder_user_name is defined else 'False' }}"
+cinder_ses_pool_name: "{{ ses_cinder_pool_name | default('') }}"
+cinder_ses_user_name: "{{ ses_cinder_user_name | default('') }}"
+cinder_ses_ceph_conf_file_path: "{{ ses_conf_file_path | default('') }}"
+cinder_ses_secret_uuid: "{{ ses_cinder_secret_uuid | default('') }}"
+
+# Cinder-Backup SES Integration
+cinder_backup_ses_enabled: "{{ 'True' if ses_cinder_backup_user_name is defined else 'False' }}"
+cinder_backup_ses_pool_name: "{{ ses_cinder_backup_pool_name | default('') }}"
+cinder_backup_ses_user_name: "{{ ses_cinder_backup_user_name | default('') }}"
+cinder_backup_ses_ceph_conf_file_path: "{{ ses_conf_file_path | default('') }}"

@@ -103,6 +103,14 @@ enabled_backends={{ my_enabled_backends.cinder_enabled_backends[inventory_hostna
 {% endfor %}
 {% endif %}
 
+# Configure Cinder backup with SES
+{% if cinder_backup_ses_enabled|bool %}
+backup_driver = cinder.backup.drivers.ceph
+backup_ceph_conf = {{ cinder_backup_ses_ceph_conf_file_path }}
+backup_ceph_user = {{ cinder_backup_ses_user_name }}
+backup_ceph_pool = {{ cinder_backup_ses_pool_name }}
+{% endif %}
+
 {% if cinder_keymgr_fixed_key is defined %}
 [keymgr]
 fixed_key = {{ cinder_keymgr_fixed_key }}
@@ -163,66 +171,19 @@ volume_backend_name = LVM_iSCSI
 iscsi_ip_address = {{ cinder_osapi_volume_listen }}
 {% endif %}
 
-# Start of section for StoreVirtual (VSA) cluster
-#
-# If you have configured StoreVirtual backend storage for cinder you
-# must uncomment this section, and replace all strings in angle
-# brackets with the correct values for the cluster you have
-# configured.  You must also add the section name to the list of
-# values in the 'enabled_backends' variable above.
-#
-# If you have more than one StoreVirtual cluster you must provide this
-# whole section for each cluster and provide a unique section name for
-# each cluster. For example, replace <unique-section-name> with
-# VSA_CLUSTER_1 for one cluster and VSA_CLUSTER_2 for the other.
-#
-# Note, if you want to group more than one cluster under a single
-# cinder backend then you can give the same value to <vsa-backend-name>
-# in sections for several clusters.
-#
-# Use this model if the StoreVirtual Storage array is running LeftHand OS
-# version 11 or higer
-#
-#[<unique-section-name>]
-# If adding a password here, then the password can be encrypted using the
-# mechanism specified in the documentation.  If the password has been encrypted
-# add the value and the openstack_user_password_decrypt filter like so:
-#hpelefthand_password = {{ '<encrypted vsa-cluster-password>' | openstack_user_password_decrypt }}
-# Note that the encrypted value has to be enclosed in quotes
-# If you choose not to encrypt the password then the unencrypted password
-# must be set as follows:
-#hpelefthand_password = <vsa-cluster-password>
-#hpelefthand_clustername = <vsa-cluster-name>
-#hpelefthand_api_url = https://<vsa-cluster-vip>:8081/lhos
-#hpelefthand_username =  <vsa-cluster-username>
-#hpelefthand_iscsi_chap_enabled = true
-#volume_backend_name = <vsa-backend-name>
-#volume_driver = cinder.volume.drivers.hpe.hpe_lefthand_iscsi.HPELeftHandISCSIDriver
-#hpelefthand_debug = false
-#
-#
-# Use this model if the StoreVirtual Storage array is running LeftHand OS
-# lower than version 11
-#
-# [<unique-section-name>]
-# volume_driver=cinder.volume.drivers.hpe.hpe_lefthand_iscsi.HPELeftHandISCSIDriver
-# volume_backend_name=lefthand-cliq
-# san_ip=<san-ip>
-# san_login=<san_username>
-# If adding a password here, then the password can be encrypted using the
-# mechanism specified in the documentation.  If the password has been encrypted
-# add the value and the openstack_user_password_decrypt filter like so:
-# san_password= {{ '<encrypted san_password>' | openstack_user_password_decrypt }}
-# Note that the encrypted value has to be enclosed in quotes
-# If you choose not to encrypt the password then the unencrypted password
-# must be set as follows:
-# san_password=<san_password>
-# san_ssh_port=16022
-# san_clustername=<vsa-cluster-name>
-#volume_backend_name = <vsa-backend-name>
-#
-#
-# End of section for StoreVirtual (VSA) cluster
+# Cinder SES integration
+# FIXME(gyee): according to documentation, cinder can support multiple Ceph
+# storeage pools. We may need to take that into design consideration.
+# For now, let's just assume we have one.
+{% if cinder_ses_enabled|bool %}
+[ses_ceph]
+volume_driver = cinder.volume.drivers.rbd.RBDDriver
+rbd_secret_uuid = {{ cinder_ses_secret_uuid }}
+rbd_user = {{ cinder_ses_user_name }}
+rbd_pool = {{ cinder_ses_pool_name }}
+rbd_ceph_conf = {{ cinder_ses_ceph_conf_file_path }}
+volume_backend_name = ses_ceph
+{% endif %}
 
 # Start of section for StoreServ (3par) iscsi cluster
 #
