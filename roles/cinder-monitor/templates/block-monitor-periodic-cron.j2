@@ -1,7 +1,7 @@
 {#
 #
 # (c) Copyright 2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -20,4 +20,4 @@
 SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 MAILTO=""
-*/5 * * * * root /usr/local/bin/cinder_diag --hpssacli --json > {{ cinder_monitor_json_dir }}/hpssacli_diag.log 2>&1 && mv {{ cinder_monitor_json_dir }}/hpssacli_diag.log {{ cinder_monitor_json_dir }}/hpssacli_diag.json
+*/5 * * * * root /usr/local/bin/cinder_diag --ssacli --json > {{ cinder_monitor_json_dir }}/ssacli_diag.log 2>&1 && mv {{ cinder_monitor_json_dir }}/ssacli_diag.log {{ cinder_monitor_json_dir }}/ssacli_diag.json
