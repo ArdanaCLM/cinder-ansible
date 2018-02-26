@@ -1,6 +1,6 @@
 #
 # (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -32,11 +32,13 @@
     state: latest
   with_items: cinder_volume_dependencies
   ignore_errors: True
-  register: install_vol_deps_dpkg_check_result
+  register: install_vol_deps_pkg_check_result
 
 - name: CND-VOL | install | Stop the tgt daemon
-  service: name=tgt state=stopped
-  when: install_vol_deps_dpkg_check_result and cinder_stop_tgt == True
+  service:
+    name: "{{ cinder_tgt_service_name }}"
+    state: stopped
+  when: install_vol_deps_pkg_check_result and cinder_stop_tgt == True
 
 - name: CND-VOL | install | Update venv cache
   install_package:

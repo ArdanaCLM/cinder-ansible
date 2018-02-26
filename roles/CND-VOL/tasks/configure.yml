@@ -16,40 +16,7 @@
 #
 ---
 
-- name: CND-VOL | configure | obtain cinder volume version from package install
-  set_fact:
-    cinder_volume_version: >-
-      {{ ardana_notify_cinder_volume_venv_install.version }}
-  when: not (ardana_notify_cinder_volume_venv_install is not defined)
-
-- name: CND-VOL | configure | obtain cinder volume version from {{ cinder_venv_root }}/
-  shell: >
-    readlink -f {{ cinder_venv_root }}/cinder-volume |
-    sed 's#{{ cinder_venv_root }}/cinder-volume-##g'
-  register: cinder_volume_link_result
-  when: ardana_notify_cinder_volume_venv_install is not defined
-
-- name: CND-VOL | configure | set volume version fact from link
-  set_fact:
-    cinder_volume_version: "{{ cinder_volume_link_result.stdout }}"
-  when: ardana_notify_cinder_volume_venv_install is not defined
-
-- name: CND-VOL | configure | set versioned cinder_volume_conf_dir fact
-  set_fact:
-    cinder_volume_conf_dir: >-
-      {{ 'cinder-volume' | config_dir(cinder_volume_version) }}
-    cinder_volume_venv_share_dir: >-
-      {{ 'cinder-volume' | share_dir(cinder_volume_version) }}/cinder
-
-# Trying to render conf_dir in the include line results in infinite recursion.
-# Since cinder_conf_dir may have already been set via CND-BCK role, which
-# includes this task, we don't want to override with cinder_volume_conf_dir.
-- name: CND-VOL | configure | Generate conf_dir path for common include
-  set_fact:
-    conf_dir: "{{ cinder_conf_dir | default(cinder_volume_conf_dir) }}"
-- include: ../../_CND-CMN/tasks/configure.yml
-  vars:
-    cinder_conf_dir: "{{ conf_dir }}"
+- include: ./_cinder_volume_vars.yml
 
 - name: CND-VOL | configure | Generate {{ cinder_volume_conf_dir }}/volume.conf
   template:

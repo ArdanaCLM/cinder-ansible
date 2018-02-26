@@ -1,6 +1,6 @@
 #
 # (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -21,6 +21,9 @@
 
 - include: ./_activate.yml
 
+# test to see if rendered cinder.conf has enabled_backends set
+- include: ./_test_backends_enabled.yml
+
 - name: CND-VOL | start | Start tgt service
   service:
     name: "{{ cinder_tgt_service_name }}"
@@ -31,6 +34,7 @@
     name: cinder-volume
     state: restarted
   when: (_cinder_volume_running_here | bool) and
+        (_cinder_backends_enabled | bool) and
         (((not (ardana_notify_cinder_restart_required is not defined)) and
         ardana_notify_cinder_restart_required.changed and
         cinder_volume_restarted_result is not defined) or
@@ -46,7 +50,8 @@
   service:
     name: cinder-volume
     state: started
-  when: (_cinder_volume_running_here | bool)
+  when: (_cinder_volume_running_here | bool) and
+        (_cinder_backends_enabled | bool)
 
 # This creates the local cinder fact file. On the initial deploy the value
 # written to the file will be the default index value of 0. This file is only
