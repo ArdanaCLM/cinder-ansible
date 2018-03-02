@@ -1,7 +1,7 @@
 {#
 #
 # (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -17,10 +17,17 @@
 #
 #}
 {% extends "roles/_CND-CMN/templates/cinder-logging.conf.j2" %}
-{% block extend_loggers scoped %}{% if cinder_api_audit_enable | bool %}, audit{% endif %}{% endblock extend_loggers %}
+{% block extend_loggers scoped %}, eventletwsgi{% if cinder_api_audit_enable | bool %}, audit{% endif %}{% endblock extend_loggers %}
 {% block extend_handlers scoped %}{% if cinder_api_audit_enable | bool %}, audit{% endif %}{% endblock extend_handlers %}
 {% block extend_formatters scoped %}{% if cinder_api_audit_enable | bool %}, minimal{% endif %}{% endblock extend_formatters %}
-{% block audit_logger scoped %}
+{% block extend_loggers_conf scoped %}
+
+# Keep eventlet.wsgi.server chattiness to a minimum, otherwise
+# the healthcheck middleware will flood the logs
+[logger_eventletwsgi]
+qualname: eventlet.wsgi.server
+handlers: watchedfile, logstash
+level: WARNING
 {% if cinder_api_audit_enable | bool %}
 
 [logger_audit]
@@ -29,8 +36,8 @@ handlers: audit
 propagate: 0
 level: INFO
 {% endif %}
-{% endblock audit_logger %}
-{% block audit_handler scoped %}
+{% endblock extend_loggers_conf %}
+{% block extend_handlers_conf scoped %}
 {% if cinder_api_audit_enable | bool %}
 
 # Write audit messages to the cinder-audit.log file
@@ -40,14 +47,14 @@ args: ('{{ cinder_audit_log_base_location }}/cinder/cinder-audit.log',)
 formatter: minimal
 level: INFO
 {% endif %}
-{% endblock audit_handler %}
-{% block audit_formatter scoped %}
+{% endblock extend_handlers_conf %}
+{% block extend_formatters_conf scoped %}
 {% if cinder_api_audit_enable | bool %}
 
 # the minimal formatter
 [formatter_minimal]
 format=%(message)s
 {% endif %}
-{% endblock audit_formatter %}
+{% endblock extend_formatters_conf %}
 {% block logfilename %}cinder-api{% endblock logfilename %}
 {% block jsonlogfilename %}cinder-api-json{% endblock jsonlogfilename %}

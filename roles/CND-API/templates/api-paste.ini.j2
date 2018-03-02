@@ -1,7 +1,7 @@
 {#
 #
 # (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -26,6 +26,7 @@ use = call:cinder.api:root_app_factory
 /v1: openstack_volume_api_v1
 /v2: openstack_volume_api_v2
 /v3: openstack_volume_api_v3
+/healthcheck: healthcheck
 
 [composite:openstack_volume_api_v1]
 use = call:cinder.api.middleware.auth:pipeline_factory
@@ -98,6 +99,11 @@ pipeline = ssl cors faultwrap osvolumeversionapp
 
 [app:osvolumeversionapp]
 paste.app_factory = cinder.api.versions:Versions.factory
+
+[app:healthcheck]
+paste.app_factory = oslo_middleware:Healthcheck.app_factory
+backends = disable_by_file
+disable_by_file_path = /var/run/cinder-api/healthcheck_disable
 
 ##########
 # Shared #
