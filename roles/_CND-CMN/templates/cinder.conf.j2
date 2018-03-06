@@ -219,11 +219,11 @@ volume_backend_name = ses_ceph
 # If adding a password here, then the password can be encrypted using the
 # mechanism specified in the documentation.  If the password has been encrypted
 # add the value and the openstack_user_password_decrypt filter like so:
-#hpe3par_password = {{ '<encrypted hp3par_password>' | openstack_user_password_decrypt }}
+#hpe3par_password = {{ '<encrypted hpe3par_password>' | openstack_user_password_decrypt }}
 # Note that the encrypted value has to be enclosed in quotes
 # If you choose not to encrypt the password then the unencrypted password
 # must be set as follows:
-#hpe3par_password = <hp3par_password>
+#hpe3par_password = <hep3par_password>
 #hpe3par_api_url = https://<3par-san-ipaddr>:8080/api/v1
 #hpe3par_cpg = <3par-cpg-name-1>[,<3par-cpg-name-2>, ...]
 #volume_backend_name = <3par-backend-name>

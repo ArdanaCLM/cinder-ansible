@@ -1,7 +1,7 @@
 {#
 #
 # (c) Copyright 2016-2017 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -228,13 +228,13 @@ iscsi_ip_address = {{ cinder_osapi_volume_listen }}
 # If you want to configure more than one CPG then you can do one of the
 # following:
 #   1) Create an unique section for each backend, or
-#   2) Provide a comma separated list of CPGs for hp3par_cpg
+#   2) Provide a comma separated list of CPGs for hpe3par_cpg
 #
 # In the second case, this set of CPGs will form a pool but will be seen as a
 # single device by Cinder.
 #
 #[<unique-section-name>]
-#hp3par_iscsi_chap_enabled = true
+#hpe3par_iscsi_chap_enabled = true
 #san_ip = <3par-san-ipaddr>
 #san_login = <3par-san-username>
 # If adding a password here, then the password can be encrypted using the
@@ -245,18 +245,18 @@ iscsi_ip_address = {{ cinder_osapi_volume_listen }}
 # If you choose not to encrypt the password then the unencrypted password
 # must be set as follows:
 # san_password = <3par-san-password>
-#hp3par_iscsi_ips = <3par-ip-address-1>[,<3par-ip-address-2>,<3par-ip-address-3>, ...]
-#hp3par_username = <3par-username>
+#hpe3par_iscsi_ips = <3par-ip-address-1>[,<3par-ip-address-2>,<3par-ip-address-3>, ...]
+#hpe3par_username = <3par-username>
 # If adding a password here, then the password can be encrypted using the
 # mechanism specified in the documentation.  If the password has been encrypted
 # add the value and the openstack_user_password_decrypt filter like so:
-#hp3par_password = {{ '<encrypted hp3par_password>' | openstack_user_password_decrypt }}
+#hpe3par_password = {{ '<encrypted hpe3par_password>' | openstack_user_password_decrypt }}
 # Note that the encrypted value has to be enclosed in quotes
 # If you choose not to encrypt the password then the unencrypted password
 # must be set as follows:
-#hp3par_password = <hp3par_password>
-#hp3par_api_url = https://<3par-san-ipaddr>:8080/api/v1
-#hp3par_cpg = <3par-cpg-name-1>[,<3par-cpg-name-2>, ...]
+#hpe3par_password = <hpe3par_password>
+#hpe3par_api_url = https://<3par-san-ipaddr>:8080/api/v1
+#hpe3par_cpg = <3par-cpg-name-1>[,<3par-cpg-name-2>, ...]
 #volume_backend_name = <3par-backend-name>
 #volume_driver = cinder.volume.drivers.san.hp.hp_3par_iscsi.HP3PARISCSIDriver
 #
@@ -275,7 +275,7 @@ iscsi_ip_address = {{ cinder_osapi_volume_listen }}
 # If you want to configure more than one CPG then you can do one of the
 # following:
 #   1) Create an unique section for each backend, or
-#   2) Provide a comma separated list of CPGs for hp3par_cpg
+#   2) Provide a comma separated list of CPGs for hpe3par_cpg
 #
 # In second case, these sets of CPGs will form a pool but will seen as a
 # single device by Cinder.
@@ -292,17 +292,17 @@ iscsi_ip_address = {{ cinder_osapi_volume_listen }}
 # If you choose not to encrypt the password then the unencrypted password
 # must be set as follows:
 #san_password = <3par-san-password>
-#hp3par_username = <3par-username>
+#hpe3par_username = <3par-username>
 # If adding a password here, then the password can be encrypted using the
 # mechanism specified in the documentation.  If the password has been encrypted
 # add the value and the openstack_user_password_decrypt filter like so:
-#hp3par_password = {{ '<encrypted 3par-password>' | openstack_user_password_decrypt }}
+#hpe3par_password = {{ '<encrypted 3par-password>' | openstack_user_password_decrypt }}
 # Note that the encrypted value has to be enclosed in quotes
 # If you choose not to encrypt the password then the unencrypted password
 # must be set as follows:
-#hp3par_password = <3par-password>
-#hp3par_api_url = https://<3par-san-ipaddr>:8080/api/v1
-#hp3par_cpg = <3par-cpg-name-1>[,<3par-cpg-name-2>,...]
+#hpe3par_password = <3par-password>
+#hpe3par_api_url = https://<3par-san-ipaddr>:8080/api/v1
+#hpe3par_cpg = <3par-cpg-name-1>[,<3par-cpg-name-2>,...]
 #volume_backend_name = <3par-backend-name>
 #volume_driver = cinder.volume.drivers.san.hp.hp_3par_fc.HP3PARFCDriver
 #
