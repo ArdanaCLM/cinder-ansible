@@ -29,7 +29,7 @@
   become: yes
   package:
     name: "{{ item }}"
-    state: latest
+    state: present
   with_items: cinder_volume_dependencies
   ignore_errors: True
   register: install_vol_deps_pkg_check_result

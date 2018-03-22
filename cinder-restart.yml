@@ -1,6 +1,5 @@
 #
-# (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017-2018 SUSE LLC
+# (c) Copyright 2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -15,14 +14,11 @@
 # under the License.
 #
 ---
+- hosts: all
+  tasks:
+    - debug:
+        msg: "Trigger a change notification in cinder"
+      changed_when: true
+      register: ardana_notify_cinder_restart_required
 
-# Install Cinder Service Dependencies
-
-# Call out significant dependencies separately from main package
-- name: CND-SVC | install | Install Cinder Client OS specific dependencies
-  become: yes
-  package:
-    name: "{{ item }}"
-    state: present
-  with_items: cinder_service_client_dependencies
-  ignore_errors: True
+- include: cinder-start.yml
