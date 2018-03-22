@@ -18,6 +18,7 @@
 
 cinder_user: cinder
 cinder_group: cinder
+cinder_home_dir: /var/lib/cinder
 mon_agent_group: monasca
 
 # Number of maximum worker allowed regardless of CPUs available
