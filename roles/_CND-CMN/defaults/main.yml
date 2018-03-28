@@ -62,7 +62,7 @@ cinder_osapi_volume_listen: "{{ host.bind.CND_API.internal.ip_address }}"
 cinder_osapi_volume_listen_port: "{{ host.bind.CND_API.internal.port }}"
 
 # database ssl
-cinder_db_ca_file: "/etc/ssl/certs/ca-certificates.crt"
+cinder_db_ca_file: "{{ trusted_ca_bundle }}"
 cinder_db_ssl: >-
     {% if CND_API.consumes_FND_MDB.vips.private[0].use_tls -%}
     ?ssl_ca={{ cinder_db_ca_file }}
@@ -89,7 +89,7 @@ cinder_keystone:
   region_name: "{{ CND_API.advertises.vips.public[0].region_name }}"
   internal_url: "{{ CND_API.consumes_KEY_API.vips.private[0].url }}"
   monasca_tenant: "{{ KEY_API.vars.keystone_admin_tenant }}"
-  cacert_file: "/etc/ssl/certs/ca-certificates.crt"
+  cacert_file: "{{ trusted_ca_bundle }}"
   memcached_servers: "{% for x in CND.consumes_FND_MEM.members.private %}{{ x.host }}:{{ x.port }}{%if not loop.last %},{% endif %}{% endfor %}"
   memcache_secret_key: "{{ CND.consumes_FND_MEM.vars.memcached.cinder.secret_key | quote }}"
 
