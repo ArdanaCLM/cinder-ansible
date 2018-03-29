@@ -14,6 +14,8 @@
 # under the License.
 #
 ---
-- include: _cinder-schedule-restart.yml
-
-- include: cinder-start.yml
+- name: _CND-CMN | _schedule_restart | Schedule a restart for cinder
+  debug:
+    msg: "Trigger a change notification in cinder"
+  changed_when: true
+  register: ardana_notify_cinder_restart_required

@@ -14,6 +14,7 @@
 # under the License.
 #
 ---
-- include: _cinder-schedule-restart.yml
-
-- include: cinder-start.yml
+# Schedule a restart of all cinder services using ardana_notify_... variables
+- hosts: all
+  tasks:
+    - include: roles/_CND-CMN/tasks/_schedule_restart.yml
