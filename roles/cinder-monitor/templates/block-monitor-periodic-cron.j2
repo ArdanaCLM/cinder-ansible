@@ -20,4 +20,4 @@
 SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 MAILTO=""
-*/5 * * * * root /usr/local/bin/cinder_diag --ssacli --json > {{ cinder_monitor_json_dir }}/ssacli_diag.log 2>&1 && mv {{ cinder_monitor_json_dir }}/ssacli_diag.log {{ cinder_monitor_json_dir }}/ssacli_diag.json
+*/5 * * * * root {{ bin_path }}/cinder_diag --ssacli --json > {{ cinder_monitor_json_dir }}/ssacli_diag.log 2>&1 && mv {{ cinder_monitor_json_dir }}/ssacli_diag.log {{ cinder_monitor_json_dir }}/ssacli_diag.json
