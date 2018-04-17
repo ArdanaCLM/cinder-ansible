@@ -86,6 +86,7 @@ cinder_internal_tenant_user_id = {{ cinderinternal_user_id }}
 # Configure the enabled backends
 enabled_backends=
 {%- if cinder_lvm_device_group %},lvm-1{% endif %}
+{%- if cinder_ses_enabled|bool %},ses_ceph{% endif %}
 
 {% endif %}
 
