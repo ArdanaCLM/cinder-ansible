@@ -1,6 +1,6 @@
 #
 # (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -52,6 +52,9 @@
     mode: 0400
   register: ardana_notify_cinder_backup_restart_required
 
+# We force the log level for backup to WARNING because of a bug in
+# eventlet as described here:
+# https://github.com/eventlet/eventlet/issues/432
 - name: CND-BCK | configure | Create '{{ cinder_backup_conf_dir }}'/backup-logging.conf
   template:
     src: backup-logging.conf.j2
