@@ -32,7 +32,7 @@ transport_url = rabbit://{{ cinder_rabbit_hosts_transport_url }}/
 {% if cinder_glance_url is defined %}
 glance_api_servers = {{ cinder_glance_url }}
 {% endif %}
-{% if cinder_backup_swift_url is defined %}
+{% if cinder_backup_swift_url is defined and cinder_backup_swift_url %}
 backup_swift_url = {{ cinder_backup_swift_url }}
 swift_catalog_info = object-store:swift:internalURL
 {% endif %}
