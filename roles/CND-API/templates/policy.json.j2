@@ -1,4 +1,6 @@
 {
+    "context_is_admin": "role:admin or role:cinder_admin",
+
     "admin_or_owner":  "is_admin:True or role:cinder_admin or (role:admin and is_admin_project:True) or project_id:%(project_id)s",
 
     "default": "rule:admin_or_owner",
