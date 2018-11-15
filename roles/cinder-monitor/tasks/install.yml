@@ -16,13 +16,8 @@
 #
 ---
 
-- name: cinder-monitor | install | install cinderlm (legacy)
-  include: install_legacy.yml
-  when: deployer_media_legacy_layout|bool
-
 - name: cinder-monitor | install | install cinderlm (rpm)
   package:
     name: python-cinderlm
     state: present
   become: yes
-  when: deployer_media_legacy_layout|bool == False

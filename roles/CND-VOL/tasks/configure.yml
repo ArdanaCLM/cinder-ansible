@@ -36,18 +36,6 @@
     mode: 0400
   register: ardana_notify_cinder_volume_restart_required
 
-- name: CND-VOL | configure | Create several rootwrap volume.filters
-  shell: >
-    rsync -ciog --chmod=0400 --chown=root:root
-    {{ cinder_volume_venv_share_dir }}/etc/cinder/{{ item }}
-    {{ cinder_dir }}/{{ item }}
-  register: rsync_result
-  changed_when: 'rsync_result.stdout != ""'
-  with_items:
-    - rootwrap.d/volume.filters
-  when: deployer_media_legacy_layout|bool
-
-
 # Since this file is included by CND-BCK role, cnd_configure_tgt may
 # have been set to False; if not default to True.
 - name: CND-VOL | configure | Determine cinder_configure_tgt setting
