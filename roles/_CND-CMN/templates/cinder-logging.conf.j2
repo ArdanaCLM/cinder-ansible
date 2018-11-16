@@ -1,7 +1,7 @@
 {#
 #
 # (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -39,8 +39,8 @@ level: WARNING
 qualname: suds
 handlers: watchedfile, logstash
 level: WARNING
-{% block audit_logger %}
-{% endblock audit_logger %}
+{% block extend_loggers_conf %}
+{% endblock extend_loggers_conf %}
 
 # Writes to disk
 [handler_watchedfile]
@@ -55,8 +55,8 @@ class: handlers.WatchedFileHandler
 args: ('/var/log/cinder/{% block jsonlogfilename %}CHANGEME{% endblock jsonlogfilename %}.log',)
 formatter: logstash
 level: {{ cinder_logstash_loglevel }}
-{% block audit_handler %}
-{% endblock audit_handler %}
+{% block extend_handlers_conf %}
+{% endblock extend_handlers_conf %}
 
 # datefmt must be set otherwise you end up with too many (msecs) fields
 [formatter_context]
@@ -69,5 +69,5 @@ datefmt: %Y-%m-%d %H:%M:%S
 [formatter_logstash]
 class: logstash.LogstashFormatterVersion1
 format: cinder
-{% block audit_formatter %}
-{% endblock audit_formatter %}
+{% block extend_formatters_conf %}
+{% endblock extend_formatters_conf %}
