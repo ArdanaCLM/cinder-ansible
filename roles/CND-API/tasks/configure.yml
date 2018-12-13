@@ -61,20 +61,23 @@
     mode: 0400
   register: ardana_notify_cinder_api_restart_required
 
-- name: CND-API | configure | Generate "{{ cinder_api_conf_dir }}"/policy.json
+- name: CND-API | configure | Generate "{{ cinder_api_conf_dir }}"/policy.yaml
   become: yes
   template:
-    src: policy.json.j2
-    dest: "{{ cinder_api_conf_dir }}/policy.json"
+    src: policy.yaml.j2
+    dest: "{{ cinder_api_conf_dir }}/policy.yaml"
     owner: "{{ cinder_user }}"
     group: "{{ cinder_group }}"
     mode: 0400
 
-- name: CND-API | configure | Deprecate "{{ cinder_dir }}"/policy.json
+- name: CND-API | configure | Deprecate old policy.json files
   become: yes
   file:
-    path: "{{ cinder_dir }}/policy.json"
+    path: "{{ item }}/policy.json"
     state: absent
+  with_items:
+    - "{{ cinder_dir }}"
+    - "{{ cinder_api_conf_dir }}"
 
 - name: CND-API | configure | Modify cinder-api.log file attributes
   become: yes
