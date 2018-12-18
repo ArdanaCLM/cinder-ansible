@@ -22,11 +22,7 @@
 [DEFAULT]
 # List of directories to load filter definitions from (separated by ',').
 # These directories MUST all be only writeable by root !
-filters_path={%- if deployer_media_legacy_layout|bool %}
-                 /etc/cinder/rootwrap.d
-             {%- else -%}
-                 /etc/cinder/rootwrap.d,{{ 'cinder-common' | venv_dir }}/etc/cinder/rootwrap.d/
-             {%- endif %}
+filters_path=/etc/cinder/rootwrap.d,{{ 'cinder-common' | venv_dir }}/etc/cinder/rootwrap.d/
 
 # List of directories to search executables in, in case filters do not
 # explicitely specify a full path (separated by ',')

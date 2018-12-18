@@ -20,11 +20,7 @@
 #
 cinderlm_project: cinderlm
 
-cinderlm_project_src: "{% if deployer_media_legacy_layout|bool -%}
-                           /opt/stack/service/{{ cinderlm_project }}/venv/lib/python2.7/site-packages/{{ cinderlm_project }}
-                       {%- else -%}
-                           /usr/lib/python2.7/site-packages/{{ cinderlm_project }}/
-                       {%- endif -%}"
+cinderlm_project_src: "/usr/lib/python2.7/site-packages/{{ cinderlm_project }}/"
 
 # path where custom check plugin(s) may be found (a valid path for 'find')
 cinder_check_plugins_src: "{{ cinderlm_project_src }}/monasca/check_plugins"
