@@ -23,8 +23,4 @@ monasca_alarm_definition_api_url: >
 
 cinder_monitor_json_dir: /var/cache/cinderlm
 
-bin_path: "{% if deployer_media_legacy_layout|bool -%}
-                           /usr/local/bin
-                       {%- else -%}
-                           /usr/bin
-                       {%- endif -%}"
+bin_path: "/usr/bin"
