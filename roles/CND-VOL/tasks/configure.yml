@@ -18,6 +18,16 @@
 
 - include: ./_cinder_volume_vars.yml
 
+# Trying to render conf_dir in the include line results in infinite recursion.
+# Since cinder_conf_dir may have already been set via CND-BCK role, which
+# includes this task, we don't want to override with cinder_volume_conf_dir.
+- name: CND-VOL | configure | Generate conf_dir path for common include
+  set_fact:
+    conf_dir: "{{ cinder_conf_dir | default(cinder_volume_conf_dir) }}"
+- include: ../../_CND-CMN/tasks/configure.yml
+  vars:
+    cinder_conf_dir: "{{ conf_dir }}"
+
 - name: CND-VOL | configure | Generate {{ cinder_volume_conf_dir }}/volume.conf
   template:
     src: volume.conf.j2
