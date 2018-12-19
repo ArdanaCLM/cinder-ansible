@@ -39,13 +39,3 @@
       {{ 'cinder-volume' | config_dir(cinder_volume_version) }}
     cinder_volume_venv_share_dir: >-
       {{ 'cinder-volume' | share_dir(cinder_volume_version) }}/cinder
-
-# Trying to render conf_dir in the include line results in infinite recursion.
-# Since cinder_conf_dir may have already been set via CND-BCK role, which
-# includes this task, we don't want to override with cinder_volume_conf_dir.
-- name: CND-VOL | _cinder_volume_vars | Generate conf_dir path for common include
-  set_fact:
-    conf_dir: "{{ cinder_conf_dir | default(cinder_volume_conf_dir) }}"
-- include: ../../_CND-CMN/tasks/configure.yml
-  vars:
-    cinder_conf_dir: "{{ conf_dir }}"
