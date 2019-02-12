@@ -32,7 +32,7 @@ filters_path={%- if deployer_media_legacy_layout|bool %}
 # explicitely specify a full path (separated by ',')
 # If not specified, defaults to system PATH environment variable.
 # These directories MUST all be only writeable by root !
-exec_dirs=/sbin,/usr/sbin,/bin,/usr/bin,/usr/local/bin,/usr/local/sbin,{{ cinder_common_bin_dir }}
+exec_dirs={{ cinder_common_bin_dir }},/sbin,/usr/sbin,/bin,/usr/bin,/usr/local/bin,/usr/local/sbin
 
 # Enable logging to syslog
 # Default value is False
