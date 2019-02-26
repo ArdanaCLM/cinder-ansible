@@ -44,14 +44,8 @@ cinder_facts_dir: /etc/ansible/facts.d
 # logging
 cinder_debug: True
 
-# recommended DEBUG for Cinder
-cinder_default_loglevel: DEBUG
-# recommended INFO for logstash
-cinder_logstash_default_loglevel: INFO
-
-# cinder defaults should take precedence
-cinder_loglevel: "{{ cinder_default_loglevel | default(ardana_loglevel) }}"
-cinder_logstash_loglevel: "{{ cinder_logstash_default_loglevel | default(ardana_loglevel) }}"
+cinder_loglevel: "{{ ardana_loglevel | default('INFO') }}"
+cinder_logstash_loglevel: "{{ ardana_loglevel | default('INFO') }}"
 
 cinder_iscsi_helper: tgtadm
 #cinder_keymgr_fixed_key:
