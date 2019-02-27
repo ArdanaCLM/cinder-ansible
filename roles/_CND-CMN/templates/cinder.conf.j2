@@ -56,7 +56,7 @@ state_path = {{ cinder_state_path }}
 image_conversion_dir={{ cinder_image_conversion_dir }}
 {% endif %}
 
-iscsi_helper={{ cinder_iscsi_helper }}
+target_helper={{ cinder_iscsi_helper }}
 
 {% if cinder_public_endpoint is defined %}
 # Uncomment to set the public API in the links responses
@@ -117,16 +117,16 @@ backup_ceph_pool = {{ cinder_backup_ses_pool_name }}
 fixed_key = {{ cinder_keymgr_fixed_key }}
 {% elif cinder_keymgr_url is defined and cinder_keymgr_url != "" %}
 [key_manager]
-api_class = castellan.key_manager.barbican_key_manager.BarbicanKeyManager
+backend = barbican
 
 [barbican]
-auth_endpoint = {{ cinder_keystone.internal_url }}/v3
+auth_endpoint = {{ cinder_keystone.internal_url }}
 barbican_endpoint = {{ cinder_keymgr_url }}
 barbican_api_version = v1
 {% endif %}
 
 [keystone_authtoken]
-auth_uri = {{ cinder_keystone.identity_admin_url }}
+www_authenticate_uri = {{ cinder_keystone.admin_url }}
 auth_url = {{ cinder_keystone.internal_url }}
 auth_type = password
 project_domain_name = {{ cinder_keystone.default_domain_name }}
@@ -146,7 +146,6 @@ memcache_pool_socket_timeout = 1
 connection={{ cinder_db }}
 max_overflow={{ cinder_max_overflow }}
 max_pool_size={{ cinder_max_pool_size }}
-min_pool_size={{ cinder_min_pool_size }}
 
 [oslo_messaging_notifications]
 driver = {{ cinder_notification_driver }}
@@ -169,7 +168,7 @@ volume-group = cinder-volumes
 lvm_type = thin
 volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
 volume_backend_name = LVM_iSCSI
-iscsi_ip_address = {{ cinder_osapi_volume_listen }}
+target_ip_address = {{ cinder_osapi_volume_listen }}
 {% endif %}
 
 # Cinder SES integration
