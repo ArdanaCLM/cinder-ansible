@@ -36,7 +36,7 @@
     group: "{{ cinder_group }}"
     createhome: no
     home: "{{ cinder_home_dir }}"
-    shell: /bin/true
+    shell: /sbin/nologin
   when: cinder_user_chk_result|failed
 
 - name: _CND-CMN | install | Add user home
