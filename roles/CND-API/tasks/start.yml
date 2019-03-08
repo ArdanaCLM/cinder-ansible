@@ -49,6 +49,11 @@
   when: cinder_api_audit_map_stat_result.stat.islnk is defined and
         cinder_api_audit_map_stat_result.stat.islnk
 
+- include: ../../_CND-CMN/tasks/_copy_config_files.yml
+  vars:
+    service_name: "cinder-api"
+    cinder_conf_dir: "{{ cinder_api_conf_dir }}"
+
 - name: CND-API | start | Restart cinder-api service
   service:
     name: cinder-api
