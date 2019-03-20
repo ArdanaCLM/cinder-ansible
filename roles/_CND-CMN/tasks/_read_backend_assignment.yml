@@ -14,6 +14,16 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 #
+# If the storage input model is being used specify the assignment of backends
+# to hosts in the /etc/ansible/facts.d/cinder_backend_assignment.fact file.
+# The assignment should be specified in json format as follows:
+#{
+#  "<BACKEND_NAME>": "<HOSTNAME>",
+#  "<BACKEND_NAME>": "<HOSTNAME>",
+#  "<BACKEND_NAME>": "<HOSTNAME>",
+#  "<BACKEND_NAME>": "<HOSTNAME>"
+#}
+#
 ---
 # Read the user defined assignment of backends to hosts from the
 # fact file on localhost if the file exists
