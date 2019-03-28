@@ -24,15 +24,6 @@
 # Cinder volume and backup services. The host index numbers can be obtained
 # by running the cinder-show-volume-hosts.yml playbook.
 #
-# If the storage input model is being used specify the assignment of backends
-# to hosts in the /etc/ansible/facts.d/cinder_backend_assignment.fact file.
-# The assignment should be specified in json format as follows:
-#{
-#  "<BACKEND_NAME>": "<HOSTNAME>",
-#  "<BACKEND_NAME>": "<HOSTNAME>",
-#  "<BACKEND_NAME>": "<HOSTNAME>",
-#  "<BACKEND_NAME>": "<HOSTNAME>"
-#}
 # After the relevant fact file(s) have been edited run the cinder migration
 # playbook as follows:
 #   ansible-playbook -i hosts/verb_hosts cinder-migrate-volume.yml \
@@ -93,24 +84,6 @@
   tasks:
     - include: roles/CND-BCK/tasks/stop.yml
 
-# The enabled_backends configuration in cinder.conf may be
-# updated by the migrate. Calling the CND-API and CND-SCH
-# configure tasks so that the cinder.conf files in all
-# cinder venvs are consistent
-
-- hosts: CND-API
-  become: yes
-  roles:
-    - CND-API
-  tasks:
-    - include: roles/CND-API/tasks/configure.yml
-
-- hosts: CND-SCH
-  become: yes
-  roles:
-    - CND-SCH
-  tasks:
-    - include: roles/CND-SCH/tasks/configure.yml
 
 # If config_data.CND is not defined the Cinder volume
 # and backup services will only be started on the host
@@ -123,7 +96,6 @@
   roles:
     - CND-VOL
   tasks:
-    - include: roles/CND-VOL/tasks/configure.yml
     - include: roles/CND-VOL/tasks/start.yml
     - include: roles/CND-VOL/tasks/populate.yml
 
@@ -132,7 +104,6 @@
   roles:
     - CND-BCK
   tasks:
-    - include: roles/CND-BCK/tasks/configure.yml
     - include: roles/CND-BCK/tasks/start.yml
     - include: roles/CND-BCK/tasks/populate.yml
 
