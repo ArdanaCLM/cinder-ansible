@@ -17,6 +17,9 @@
 #
 #}
 {% extends "roles/_CND-CMN/templates/cinder.conf.j2" %}
+{% block resource_filters_config scoped %}
+resource_query_filters_file = {{ cinder_conf_dir }}/resource_filters.json
+{% endblock resource_filters_config %}
 {% block api_paste_config scoped %}
 api_paste_config = {{ cinder_conf_dir }}/api-paste.ini
 {% endblock api_paste_config %}

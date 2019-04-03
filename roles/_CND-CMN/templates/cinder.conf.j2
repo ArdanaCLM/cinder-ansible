@@ -44,6 +44,11 @@ nova_catalog_info = compute:nova:internalURL
 nova_catalog_admin_info = compute:nova:adminURL
 {% endif %}
 
+{% block resource_filters_config %}
+# resource_filters.json specified where appropriate.
+#resource_query_filters_file = /etc/cinder/resource_filters.json
+{% endblock resource_filters_config %}
+
 {% block api_paste_config %}
 # Versioned api-paste.ini specified where appropriate.
 #api_paste_config = /etc/cinder/api-paste.ini
