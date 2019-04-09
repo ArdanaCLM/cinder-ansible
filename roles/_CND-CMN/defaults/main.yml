@@ -26,7 +26,7 @@ osapi_volume_max_workers: 8
 
 # Number of workers for osapi volume workers. The default will be the
 # maximum allowed by variable osapi_volume_max_workers
-osapi_volume_worker_count: "{{ ansible_processor_count * ansible_processor_cores * 2 | default('{{ osapi_volume_max_workers }}') }}"
+osapi_volume_worker_count: "{{ [osapi_volume_max_workers, [2, ansible_processor_vcpus / 2] | max ] | min }}"
 
 # directories
 cinder_dir: /etc/cinder
