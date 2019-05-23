@@ -71,9 +71,9 @@
   become: yes
   file:
     path: "{{ cinder_rootwrap_dir }}"
-    owner: "{{ cinder_user }}"
-    group: "{{ cinder_group }}"
-    mode: 0770
+    owner: "root"
+    group: "root"
+    mode: 0755
     state: directory
 
 - name: _CND-CMN | configure | Set ownership of /var/lib/cinder
