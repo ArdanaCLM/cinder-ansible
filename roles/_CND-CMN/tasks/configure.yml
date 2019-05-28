@@ -20,7 +20,7 @@
     CPU based count is greater than {{ osapi_volume_max_workers }}
   set_fact:
     osapi_volume_worker_count: "{{ osapi_volume_max_workers }}"
-  when: osapi_volume_worker_count > osapi_volume_max_workers
+  when: osapi_volume_worker_count | int > osapi_volume_max_workers | int
 
 # Remove any vestiges of a potential package deploy
 
