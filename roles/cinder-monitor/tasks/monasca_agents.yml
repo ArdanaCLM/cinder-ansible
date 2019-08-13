@@ -21,8 +21,8 @@
   set_fact:
     _cinder_api_url: >-
       http://{{ host.bind.CND_API.
-                internal.ip_address }}:{{ host.bind.CND_API.
-                                          internal.port }}/
+                internal.ip_address | ipwrap }}:{{ host.bind.CND_API.
+                                                   internal.port }}/
   when: cinder_agent is defined and cinder_agent == "True"
 
 # The name value here is the name of Plugin class in the
