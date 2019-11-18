@@ -46,6 +46,15 @@
     mode: 0400
   register: ardana_notify_cinder_volume_restart_required
 
+- name: CND-VOL | configure | Create '{{ cinder_volume_conf_dir }}'/nfs_shares
+  copy:
+    src: nfs_shares
+    dest: "{{ cinder_volume_conf_dir }}/nfs_shares"
+    owner: "{{ cinder_user }}"
+    group: "{{ cinder_group }}"
+    mode: 0400
+  register: ardana_notify_cinder_volume_restart_required
+
 # Since this file is included by CND-BCK role, cnd_configure_tgt may
 # have been set to False; if not default to True.
 - name: CND-VOL | configure | Determine cinder_configure_tgt setting

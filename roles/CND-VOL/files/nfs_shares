@@ -1,0 +1,10 @@
+# The file referenced in the nfs_shares_config configuration option should contain
+# the NFS exports in the ip:/share format, for example:
+
+#10.63.165.215:/nfs/test
+#10.63.165.215:/nfs2/test2
+
+# where ip corresponds to the IP address assigned to a Data LIF, and share refers
+# to a junction path for a FlexVol volume within an SVM. Make sure that volumes
+# corresponding to exports have read/write permissions set on the ONTAP controllers.
+# Do not put mount options in the nfs_shares_config file; use nfs_mount_options

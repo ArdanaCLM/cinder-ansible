@@ -25,4 +25,5 @@ symlinks:
   "cinder/cinder_vol_run_location.yml": "roles/CND-VOL/vars/cinder_vol_run_location.yml"
   "cinder/scheduler.conf.j2": "roles/CND-SCH/templates/scheduler.conf.j2"
   "cinder/volume.conf.j2": "roles/CND-VOL/templates/volume.conf.j2"
+  "cinder/nfs_shares": "roles/CND-VOL/files/nfs_shares"
   "cinder/policy.yaml.j2": "roles/CND-API/templates/policy.yaml.j2"

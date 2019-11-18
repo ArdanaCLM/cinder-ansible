@@ -370,3 +370,99 @@ volume_backend_name = ses_ceph
 #backup_ceph_pool = <ceph-backup-pool>
 #
 # End of section for ceph backup
+#
+#
+# Start of section for netapp
+#
+## The storage family type used on the storage system; valid values are
+# ontap_cluster for using clustered Data ONTAP, or eseries for using E-Series.
+# (string value)
+# Possible values:
+# ontap_cluster - <No description provided>
+# eseries - <No description provided>
+#netapp_storage_family = ontap_cluster
+
+# The storage protocol to be used on the data path with the storage system.
+# (string value)
+# Possible values:
+# iscsi - <No description provided>
+# fc - <No description provided>
+# nfs - <No description provided>
+#netapp_storage_protocol = <None>
+
+## The hostname (or IP address) for the storage system or proxy server. (string
+# value)
+#netapp_server_hostname = <None>
+
+# The TCP port to use for communication with the storage system or proxy
+# server. If not specified, Data ONTAP drivers will use 80 for HTTP and 443 for
+# HTTPS; E-Series will use 8080 for HTTP and 8443 for HTTPS. (integer value)
+#netapp_server_port = <None
+
+# Administrative user account name used to access the storage system or proxy
+# server. (string value)
+#netapp_login = <None>
+
+# Password for the administrative user account specified in the netapp_login
+# option. (string value)
+#netapp_password = <None>
+
+# This option specifies the virtual storage server (Vserver) name on the
+# storage cluster on which provisioning of block storage volumes should occur.
+# (string value)
+#netapp_vserver = <None>
+
+# This option specifies whether the driver should allow operations that require
+# multiple attachments to a volume. An example would be live migration of
+# servers that have volumes attached. When enabled, this backend is limited to
+# 256 total volumes in order to guarantee volumes can be accessed by more than
+# one host. (boolean value)
+#netapp_enable_multiattach = false
+
+# File with the list of available NFS shares. (string value)
+#nfs_shares_config  = /opt/stack/service/cinder-volume/etc/nfs_shares
+
+# Mount options passed to the NFS client. See section of the NFS man page for
+# details. (string value)
+#nfs_mount_options = <None>
+
+# Representation of the over subscription ratio when thin provisioning is
+# enabled. Default ratio is 20.0, meaning provisioned capacity can be 20 times
+# of the total physical capacity. If the ratio is 10.5, it means provisioned
+# capacity can be 10.5 times of the total physical capacity. A ratio of 1.0
+# means provisioned capacity cannot exceed the total physical capacity. If
+# ratio is 'auto', Cinder will automatically calculate the ratio based on the
+# provisioned capacity and the used space. If not set to auto, the ratio has to
+# be a minimum of 1.0. (string value)
+#max_over_subscription_ratio = 20.0
+
+# The percentage of backend capacity is reserved (integer value)
+# Minimum value: 0
+# Maximum value: 100
+#reserved_percentage = 0
+
+# Driver to use for volume creation (string value)
+# volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
+
+# The backend name for a given driver implementation (string value)
+#volume_backend_name = <None>
+
+# Example Configuration
+#
+# [myNfsBackend]
+#volume_backend_name = myNfsBackend
+#volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
+#netapp_server_hostname = hostname
+#netapp_server_port = 80
+#netapp_storage_protocol = nfs
+#netapp_storage_family = ontap_cluster
+#netapp_login = admin_username
+#netapp_password = admin_password
+#netapp_vserver = svm_name
+#nfs_shares_config = /opt/stack/service/cinder-volume/etc/nfs_shares
+#max_over_subscription_ratio = 1.0
+#reserved_percentage = 5
+#nfs_mount_options=lookupcache = pos
+#netapp_enable_multiattach = True
+
+# End of section for netapp
