@@ -17,6 +17,7 @@
 cinder_volume_dependencies:
   - lvm2
   - openstack-suse-sudo
+  - nfs-client
   - qemu-tools
   - sg3_utils
   # - thin-provisioning-tools

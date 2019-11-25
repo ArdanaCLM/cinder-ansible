@@ -16,6 +16,7 @@
 ---
 cinder_service_client_dependencies:
   - logrotate
+  - nfs-client
   - open-iscsi
   - openstack-suse-sudo
   - sg3_utils
