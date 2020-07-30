@@ -20,6 +20,16 @@
 
 - include: ../../CND-VOL/tasks/install.yml cnd_stop_tgt="False"
 
+# TODO(fergal): Remove once the fix for SOC-10522 has landed
+# The cinder-backup services depends on the switfclient module
+# but that module is currently missing from the Cinder venv.
+- name: CND-BCK | install | Install cinder-backup dependencies
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python-swiftclient
+
 - name: CND-BCK | install | Update venv cache
   install_package:
     cache: update
